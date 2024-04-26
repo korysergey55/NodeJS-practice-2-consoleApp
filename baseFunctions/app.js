@@ -1,12 +1,12 @@
-import {printCurrentPAth} from './index.js';
 import {
   getAllMovies,
   getMovieById,
   addMovie,
   updateMovieById,
-  deleteMovieById
+  deleteMovieById,
 } from './movies/index.js';
-printCurrentPAth ();
+import yargs from 'yargs';
+import {program} from 'commander';
 
 const invokeAction = async ({action, id, ...data}) => {
   switch (action) {
@@ -31,17 +31,35 @@ const invokeAction = async ({action, id, ...data}) => {
 };
 // invokeAction({ action: 'list' });
 // invokeAction ({action: 'getById',id:'u9kgwNWGi3uUUwh0b8V49'});
-
 // invokeAction ({
-//   action: 'addMovie',
+//   action: ' ',
 //   title: 'I Am Legend',
 //   director: 'Francis Lawrence',
 // });
-
 // invokeAction ({
 //   action: 'updateById',
 //   id: 'ifhM37QgbH1Bf9bG_gqRk',
 //   title: 'I Am Legend-ubdeted',
 // });
-
 // invokeAction({action:'deleteById',id:'Sb5SqJXs2mgLxxVJRHka2'})
+
+// Base - process.argv
+// const arg = process.argv.slice(2)
+// invokeAction({ action: arg[1] })
+
+// Yarg - process.argv
+// const result = yargs(process.argv)
+// const { _, $0, ...actionData } = result.argv
+// console.log(actionData)
+// invokeAction(actionData)
+
+// Commander - process.argv
+program
+  .option('-a, --action <type>')
+  .option('--id <type>')
+  .option('--title <type>')
+  .option('--director <type>')
+program.parse()
+const options = program.opts()
+invokeAction(options)
+
